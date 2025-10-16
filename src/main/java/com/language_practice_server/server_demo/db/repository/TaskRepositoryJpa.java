@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TaskRepositoryJpa extends JpaRepository<TaskEntity, Long> {
-    Page<TaskEntity> findByCreatedId(Long creatorId, Pageable page);
+    Page<TaskEntity> findByCreatorId(Long creatorId, Pageable page);
 }

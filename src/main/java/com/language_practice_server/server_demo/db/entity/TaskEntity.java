@@ -6,12 +6,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+
 import java.util.Objects;
 
 @Entity
 @Table(name = "tasks")
 public class TaskEntity {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long taskTemplateId;
     private Long creatorId;
@@ -82,12 +84,15 @@ public class TaskEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskEntity that = (TaskEntity) o;
+        if (getId() == null || that.getId() == null) return false;
         return getId().equals(that.getId());
     }
 
+    //Це гарантує стабільність hashCode для транзієнтних об'єктів
+    // (використовується identityHashCode) і коректне порівняння після персисту (id заданий).
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return (id != null) ? id.hashCode() : System.identityHashCode(this);
     }
 
     @Override
