@@ -49,7 +49,7 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     @Override
     public Page<Task> findAllTaskByCreatorId(Long creatorId, Pageable pageable) {
-        return repositoryJpa.findByCreatedId(creatorId, pageable).map(taskMapper::toDomain);
+        return repositoryJpa.findByCreatorId(creatorId, pageable).map(taskMapper::toDomain);
     }
 
 //    @Override

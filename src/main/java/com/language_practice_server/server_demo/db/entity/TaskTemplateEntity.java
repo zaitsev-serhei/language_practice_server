@@ -154,12 +154,13 @@ public class TaskTemplateEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskTemplateEntity that = (TaskTemplateEntity) o;
+        if (getId() == null || that.getId() == null) return false;
         return getId().equals(that.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return (id != null) ? id.hashCode() : System.identityHashCode(this);
     }
 
     @Override
