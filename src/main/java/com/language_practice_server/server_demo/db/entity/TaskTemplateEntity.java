@@ -31,6 +31,7 @@ public class TaskTemplateEntity {
     private String instructions;
     private Long creatorId;
     private Long createdAt;
+    private boolean isDeleted = false;
 
     public TaskTemplateEntity() {
     }
@@ -147,6 +148,15 @@ public class TaskTemplateEntity {
 
     public void setCreatedAt(Long createdAt) {
         this.createdAt = createdAt;
+    }
+
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     @Override

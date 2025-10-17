@@ -32,5 +32,6 @@ public class TaskRepositoryJpaTest {
         //then
         assertEquals(result.getTotalElements(), 2L);
         assertThat(result.getContent()).extracting(TaskEntity::getCreatorId).containsOnly(100L);
+        assertThat(result.getContent()).extracting(TaskEntity::isDeleted).containsOnly(false);
     }
 }

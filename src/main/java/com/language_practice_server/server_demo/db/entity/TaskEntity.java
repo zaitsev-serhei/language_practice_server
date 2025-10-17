@@ -20,6 +20,7 @@ public class TaskEntity {
     private Long createdAt;
     @Lob
     private String instructions;
+    private boolean isDeleted = false;
 
     public TaskEntity() {
     }
@@ -77,6 +78,14 @@ public class TaskEntity {
 
     public void setInstructions(String instructions) {
         this.instructions = instructions;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     @Override

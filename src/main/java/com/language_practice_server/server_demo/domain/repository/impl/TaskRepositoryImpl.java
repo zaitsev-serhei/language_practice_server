@@ -39,7 +39,9 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     @Override
     public void delete(Long id) {
-        repositoryJpa.deleteById(id);
+        TaskEntity entityToDelete = repositoryJpa.findById(id).get();
+        entityToDelete.setDeleted(true);
+        repositoryJpa.save(entityToDelete);
     }
 
     @Override

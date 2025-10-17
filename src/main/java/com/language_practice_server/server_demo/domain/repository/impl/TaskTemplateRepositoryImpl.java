@@ -5,7 +5,9 @@ import com.language_practice_server.server_demo.db.repository.TaskTemplateReposi
 import com.language_practice_server.server_demo.domain.model.TaskTemplate;
 import com.language_practice_server.server_demo.domain.repository.TaskTemplateRepository;
 import com.language_practice_server.server_demo.mapper.TaskTemplateMapper;
+
 import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -36,7 +38,9 @@ public class TaskTemplateRepositoryImpl implements TaskTemplateRepository {
 
     @Override
     public void delete(Long templateId) {
-        repositoryJpa.deleteById(templateId);
+        TaskTemplateEntity entity = repositoryJpa.findById(templateId).get();
+        entity.setDeleted(true);
+        repositoryJpa.save(entity);
     }
 
     @Override

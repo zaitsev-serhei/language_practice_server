@@ -2,6 +2,7 @@ package com.language_practice_server.server_demo.domain.model;
 
 import com.language_practice_server.server_demo.domain.enums.TaskDifficulty;
 import com.language_practice_server.server_demo.domain.enums.TaskType;
+
 import java.util.Objects;
 
 public class TaskTemplate {
@@ -15,6 +16,7 @@ public class TaskTemplate {
     private String instructions;
     private Long creatorId;
     private Long createdAt;
+    private boolean isDeleted;
 
     public TaskTemplate() {
     }
@@ -131,6 +133,14 @@ public class TaskTemplate {
 
     public void setCreatedAt(Long createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     @Override

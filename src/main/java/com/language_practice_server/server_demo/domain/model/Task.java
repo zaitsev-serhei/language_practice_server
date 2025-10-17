@@ -8,6 +8,7 @@ public class Task {
     private Long creatorId;
     private Long createdAt;
     private String instructions;
+    private boolean isDeleted;
 
     public Task() {
     }
@@ -58,6 +59,14 @@ public class Task {
 
     public void setInstructions(String instructions) {
         this.instructions = instructions;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     @Override
