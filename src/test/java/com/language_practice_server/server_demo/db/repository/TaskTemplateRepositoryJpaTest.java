@@ -1,7 +1,7 @@
 package com.language_practice_server.server_demo.db.repository;
 
 import com.language_practice_server.server_demo.db.entity.TaskTemplateEntity;
-import com.language_practice_server.server_demo.domain.enums.TaskType;
+import com.language_practice_server.server_demo.common.enums.TaskType;
 
 import java.util.Date;
 

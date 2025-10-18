@@ -1,7 +1,7 @@
 package com.language_practice_server.server_demo.web.dto;
 
-import com.language_practice_server.server_demo.domain.enums.TaskDifficulty;
-import com.language_practice_server.server_demo.domain.enums.TaskType;
+import com.language_practice_server.server_demo.common.enums.TaskDifficulty;
+import com.language_practice_server.server_demo.common.enums.TaskType;
 import jakarta.validation.constraints.NotNull;
 
 public class TaskTemplateDto {

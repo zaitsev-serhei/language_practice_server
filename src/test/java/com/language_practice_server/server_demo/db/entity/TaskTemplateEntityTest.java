@@ -1,7 +1,7 @@
 package com.language_practice_server.server_demo.db.entity;
 
 import java.util.Date;
-import com.language_practice_server.server_demo.domain.enums.TaskType;
+import com.language_practice_server.server_demo.common.enums.TaskType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

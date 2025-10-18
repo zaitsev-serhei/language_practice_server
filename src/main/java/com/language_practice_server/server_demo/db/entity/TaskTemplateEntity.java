@@ -1,7 +1,7 @@
 package com.language_practice_server.server_demo.db.entity;
 
-import com.language_practice_server.server_demo.domain.enums.TaskDifficulty;
-import com.language_practice_server.server_demo.domain.enums.TaskType;
+import com.language_practice_server.server_demo.common.enums.TaskDifficulty;
+import com.language_practice_server.server_demo.common.enums.TaskType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,8 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
-
-import java.util.Objects;
 
 @Entity
 @Table(name = "task_templates")
