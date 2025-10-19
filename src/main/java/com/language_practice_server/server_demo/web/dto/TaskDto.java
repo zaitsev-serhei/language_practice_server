@@ -11,8 +11,9 @@ public class TaskDto {
     private Long createdAt;
     //@NotNull
     private String instructions;
+    private boolean isDeleted;
 
-    public TaskDto(){
+    public TaskDto() {
 
     }
 
@@ -62,5 +63,25 @@ public class TaskDto {
 
     public void setInstructions(String instructions) {
         this.instructions = instructions;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    @Override
+    public String toString() {
+        return "TaskDto{" +
+                "id=" + id +
+                ", taskTemplateId=" + taskTemplateId +
+                ", creatorId=" + creatorId +
+                ", createdAt=" + createdAt +
+                ", instructions='" + instructions + '\'' +
+                ", isDeleted=" + isDeleted +
+                '}';
     }
 }
