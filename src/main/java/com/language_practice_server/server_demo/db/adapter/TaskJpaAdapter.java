@@ -1,4 +1,4 @@
-package com.language_practice_server.server_demo.domain.repository.impl;
+package com.language_practice_server.server_demo.db.adapter;
 
 import com.language_practice_server.server_demo.db.entity.TaskEntity;
 import com.language_practice_server.server_demo.db.repository.TaskRepositoryJpa;
@@ -14,12 +14,12 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class TaskRepositoryImpl implements TaskRepository {
+public class TaskJpaAdapter implements TaskRepository {
     private final TaskRepositoryJpa repositoryJpa;
     private final TaskMapper taskMapper;
 
-    public TaskRepositoryImpl(TaskRepositoryJpa repositoryJpa,
-                              TaskMapper mapper) {
+    public TaskJpaAdapter(TaskRepositoryJpa repositoryJpa,
+                          TaskMapper mapper) {
         this.repositoryJpa = repositoryJpa;
         this.taskMapper = mapper;
     }

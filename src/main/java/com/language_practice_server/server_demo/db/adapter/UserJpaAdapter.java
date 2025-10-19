@@ -1,14 +1,16 @@
-package com.language_practice_server.server_demo.domain.repository.impl;
+package com.language_practice_server.server_demo.db.adapter;
 
 import com.language_practice_server.server_demo.db.entity.UserEntity;
 import com.language_practice_server.server_demo.db.repository.UserRepositoryJpa;
 import com.language_practice_server.server_demo.domain.model.User;
 import com.language_practice_server.server_demo.domain.repository.UserRepository;
 import com.language_practice_server.server_demo.mapper.UserMapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-public class UserRepositoryImpl implements UserRepository {
+@Repository
+public class UserJpaAdapter implements UserRepository {
     private UserRepositoryJpa userRepositoryJpa;
     private UserMapper userMapper;
 

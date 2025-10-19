@@ -1,14 +1,14 @@
-package com.language_practice_server.server_demo.domain.repository;
+package com.language_practice_server.server_demo.db.adapter;
 
 import com.language_practice_server.server_demo.db.entity.TaskEntity;
 import com.language_practice_server.server_demo.db.repository.TaskRepositoryJpa;
 import com.language_practice_server.server_demo.domain.model.Task;
-import com.language_practice_server.server_demo.domain.repository.impl.TaskRepositoryImpl;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.language_practice_server.server_demo.domain.repository.TaskRepository;
 import com.language_practice_server.server_demo.mapper.TaskMapperImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,8 +28,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
-@Import({TaskRepositoryImpl.class, TaskMapperImpl.class})
-public class TaskRepositoryTest {
+@Import({TaskJpaAdapter.class, TaskMapperImpl.class})
+public class TaskJpaAdapterTest {
     @Autowired
     private TaskRepositoryJpa repositoryJpa;
     @Autowired
