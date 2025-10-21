@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TaskRepositoryJpa extends JpaRepository<TaskEntity, Long> {
     Page<TaskEntity> findByCreatorId(Long creatorId, Pageable page);
+
+    Page<TaskEntity> findByCreatorIdAndDeletedFalse(Long creatorId, Pageable page);
 }

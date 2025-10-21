@@ -20,6 +20,7 @@ public class TaskTemplateDto {
     //@NotNull
     private Long creatorId;
     private Long createdAt;
+    private boolean isDeleted;
 
     public TaskTemplateDto() {
     }
@@ -117,5 +118,27 @@ public class TaskTemplateDto {
 
     public void setCreatedAt(Long createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    @Override
+    public String toString() {
+        return "TaskTemplateDto{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", taskType=" + taskType +
+                ", difficulty=" + difficulty +
+                ", creatorId=" + creatorId +
+                ", createdAt=" + createdAt +
+                ", isDeleted=" + isDeleted +
+                '}';
     }
 }
