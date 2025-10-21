@@ -1,14 +1,16 @@
-package com.language_practice_server.server_demo.domain.repository.impl;
+package com.language_practice_server.server_demo.db.adapter;
 
 import com.language_practice_server.server_demo.db.entity.PersonEntity;
 import com.language_practice_server.server_demo.db.repository.PersonRepositoryJpa;
 import com.language_practice_server.server_demo.domain.model.Person;
 import com.language_practice_server.server_demo.domain.repository.PersonRepository;
 import com.language_practice_server.server_demo.mapper.PersonMapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-public class PersonRepositoryImpl implements PersonRepository {
+@Repository
+public class PersonJpaAdapter implements PersonRepository {
     private PersonRepositoryJpa personRepositoryJpa;
     private PersonMapper personMapper;
 

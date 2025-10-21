@@ -1,4 +1,4 @@
-package com.language_practice_server.server_demo.domain.repository.impl;
+package com.language_practice_server.server_demo.db.adapter;
 
 import com.language_practice_server.server_demo.db.entity.TaskTemplateEntity;
 import com.language_practice_server.server_demo.db.repository.TaskTemplateRepositoryJpa;
@@ -14,12 +14,12 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class TaskTemplateRepositoryImpl implements TaskTemplateRepository {
+public class TaskTemplateJpaAdapter implements TaskTemplateRepository {
     private final TaskTemplateRepositoryJpa repositoryJpa;
     private final TaskTemplateMapper templateMapper;
 
-    public TaskTemplateRepositoryImpl(TaskTemplateRepositoryJpa repositoryJpa,
-                                      TaskTemplateMapper mapper) {
+    public TaskTemplateJpaAdapter(TaskTemplateRepositoryJpa repositoryJpa,
+                                  TaskTemplateMapper mapper) {
         this.repositoryJpa = repositoryJpa;
         this.templateMapper = mapper;
     }
@@ -51,5 +51,15 @@ public class TaskTemplateRepositoryImpl implements TaskTemplateRepository {
     @Override
     public Page<TaskTemplate> findAllTaskTemplateByCreatorId(Long creatorId, Pageable pageable) {
         return repositoryJpa.findByCreatorId(creatorId, pageable).map(templateMapper::toDomain);
+    }
+
+    @Override
+    public Page<TaskTemplate> findActiveTaskTemplateByCreatorId(Long creatorId, Pageable pageable) {
+        return repositoryJpa.findByCreatorIdAndDeletedFalse(creatorId, pageable);
+    }
+
+    @Override
+    public Page<TaskTemplate> findAllTaskTemplate(Pageable page) {
+        return repositoryJpa.findAll(page).map(templateMapper::toDomain);
     }
 }

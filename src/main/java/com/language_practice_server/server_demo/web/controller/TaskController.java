@@ -2,7 +2,7 @@ package com.language_practice_server.server_demo.web.controller;
 
 import com.language_practice_server.server_demo.domain.model.Task;
 import com.language_practice_server.server_demo.mapper.TaskDtoMapper;
-import com.language_practice_server.server_demo.service.task.TaskService;
+import com.language_practice_server.server_demo.service.TaskService;
 import com.language_practice_server.server_demo.web.dto.TaskDto;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,27 +31,31 @@ public class TaskController {
     }
 
     @PostMapping
-    public TaskDto createTask(@RequestBody @Valid TaskDto dto) {
+    public ResponseEntity<TaskDto> createTask(@RequestBody @Valid TaskDto dto) {
         Task task = mapper.toDomain(dto);
-        return mapper.toDto(taskService.saveTask(task));
+        return ResponseEntity.ok(mapper.toDto(taskService.saveTask(task)));
     }
 
     @GetMapping("/{id}")
-    public TaskDto getTaskById(Long taskId) {
-        return mapper.toDto(taskService.findTaskById(taskId));
+    public ResponseEntity<TaskDto> getTaskById(Long taskId) {
+        return ResponseEntity.ok(mapper.toDto(taskService.findTaskById(taskId)));
     }
 
     @GetMapping("/creator/{creatorId}")
-    public Page<TaskDto> getTaskByCreatorId(@PathVariable Long creatorId,
+    public ResponseEntity<Page<TaskDto>> getTaskByCreatorId(@PathVariable Long creatorId,
                                             @RequestParam(defaultValue = "0") int page,
                                             @RequestParam(defaultValue = "10") int size,
                                             @RequestParam(defaultValue = "id") String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
         Page<Task> tasksPage = taskService.findAllTasksByCreatorId(creatorId, pageable);
-        return tasksPage.map(mapper::toDto);
+        Page<TaskDto> dtoPage = tasksPage.map(mapper::toDto);
+        if (dtoPage.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(dtoPage);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{taskId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTask(@PathVariable Long taskId) {
         taskService.delete(taskId);
