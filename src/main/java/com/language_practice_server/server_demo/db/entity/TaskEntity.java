@@ -1,5 +1,7 @@
 package com.language_practice_server.server_demo.db.entity;
 
+import com.language_practice_server.server_demo.audit.BaseAuditableEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,36 +9,34 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 
-import java.util.Objects;
-
 @Entity
 @Table(name = "tasks")
-public class TaskEntity {
+public class TaskEntity extends BaseAuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "template_id", nullable = false)
     private Long taskTemplateId;
-    private Long creatorId;
-    private Long createdAt;
+    @Column(name = "creator_id", nullable = false)
+    private Long ownerId;
     @Lob
     private String instructions;
-    private boolean isDeleted = false;
+    @Column(name = "deleted")
+    private boolean deleted = false;
 
     public TaskEntity() {
     }
 
-    public TaskEntity(Long id, Long taskTemplateId, Long creatorId, Long createdAt) {
+    public TaskEntity(Long id, Long taskTemplateId, Long ownerId) {
         this.id = id;
         this.taskTemplateId = taskTemplateId;
-        this.creatorId = creatorId;
-        this.createdAt = createdAt;
+        this.ownerId = ownerId;
     }
 
-    public TaskEntity(Long id, Long taskTemplateId, Long creatorId, Long createdAt, String instructions) {
+    public TaskEntity(Long id, Long taskTemplateId, Long ownerId, String instructions) {
         this.id = id;
         this.taskTemplateId = taskTemplateId;
-        this.creatorId = creatorId;
-        this.createdAt = createdAt;
+        this.ownerId = ownerId;
         this.instructions = instructions;
     }
 
@@ -56,20 +56,12 @@ public class TaskEntity {
         this.taskTemplateId = taskTemplateId;
     }
 
-    public Long getCreatorId() {
-        return creatorId;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
-    }
-
-    public Long getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Long createdAt) {
-        this.createdAt = createdAt;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getInstructions() {
@@ -81,27 +73,11 @@ public class TaskEntity {
     }
 
     public boolean isDeleted() {
-        return isDeleted;
+        return deleted;
     }
 
     public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TaskEntity that = (TaskEntity) o;
-        if (getId() == null || that.getId() == null) return false;
-        return getId().equals(that.getId());
-    }
-
-    //Це гарантує стабільність hashCode для транзієнтних об'єктів
-    // (використовується identityHashCode) і коректне порівняння після персисту (id заданий).
-    @Override
-    public int hashCode() {
-        return (id != null) ? id.hashCode() : System.identityHashCode(this);
+        this.deleted = deleted;
     }
 
     @Override
@@ -109,8 +85,7 @@ public class TaskEntity {
         return "TaskEntity{" +
                 "id=" + id +
                 ", taskTemplateId=" + taskTemplateId +
-                ", creatorId=" + creatorId +
-                ", createdAt=" + createdAt +
+                ", creatorId=" + ownerId +
                 '}';
     }
 }

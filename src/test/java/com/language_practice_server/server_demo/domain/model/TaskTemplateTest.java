@@ -3,7 +3,7 @@ package com.language_practice_server.server_demo.domain.model;
 import com.language_practice_server.server_demo.common.enums.TaskDifficulty;
 import com.language_practice_server.server_demo.common.enums.TaskType;
 
-import java.util.Date;
+import java.time.Instant;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,10 +14,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TaskTemplateTest {
     @Test
     public void gettersAndSetterAndEquals() {
-        Long date = new Date().getTime();
-        TaskTemplate template1 = new TaskTemplate(1L, "Test 1", "description", TaskType.TEST, TaskDifficulty.EASY, 100L, date);
-        TaskTemplate template2 = new TaskTemplate(1L, "Test 1", "description", TaskType.TEST, TaskDifficulty.EASY, 100L, date);
-        TaskTemplate template3 = new TaskTemplate(2L, "Test 2", "description", TaskType.TEST, TaskDifficulty.EASY, 200L, date);
+        TaskTemplate template1 = new TaskTemplate(1L, "Test 1", "description", TaskType.TEST, TaskDifficulty.EASY, 100L);
+        TaskTemplate template2 = new TaskTemplate(1L, "Test 1", "description", TaskType.TEST, TaskDifficulty.EASY, 100L);
+        TaskTemplate template3 = new TaskTemplate(2L, "Test 2", "description", TaskType.TEST, TaskDifficulty.EASY, 200L);
 
         //getters
         assertEquals(1L, template1.getId());
@@ -25,8 +24,8 @@ public class TaskTemplateTest {
         assertTrue(template1.getDescription().contains("description"));
         assertEquals(TaskType.TEST, template1.getTaskType());
         assertEquals(TaskDifficulty.EASY, template1.getDifficulty());
-        assertEquals(100L, template1.getCreatorId());
-        assertEquals(date, template1.getCreatedAt());
+        assertEquals(100L, template1.getOwnerId());
+
 
 
         //equals
