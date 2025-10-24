@@ -30,8 +30,8 @@ public class UserEntity extends BaseAuditableEntity {
     private boolean locked;
     private boolean credentialsExpired;
     private LocalDateTime lastLoginDate;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "person_id")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) //cascade = CascadeType.ALL - if the main object is deleted, associated object is deleted too
+    @JoinColumn(name = "person_id", referencedColumnName = "id") // referencedColumnName is optional; if omitted, the primary key of the referenced entity is assumed.
     private PersonEntity person;
 
     public UserEntity() {
@@ -46,6 +46,7 @@ public class UserEntity extends BaseAuditableEntity {
         this.locked = locked;
         this.credentialsExpired = credentialsExpired;
         this.lastLoginDate = lastLoginDate;
+        this.person = person;
     }
 
     public Long getId() {
@@ -112,6 +113,14 @@ public class UserEntity extends BaseAuditableEntity {
         this.lastLoginDate = lastLoginDate;
     }
 
+    public PersonEntity getPerson() {
+        return person;
+    }
+
+    public void setPerson(PersonEntity person) {
+        this.person = person;
+    }
+
     @Override
     public String toString() {
         return "UserEntity{" +
@@ -122,6 +131,7 @@ public class UserEntity extends BaseAuditableEntity {
                 ", locked=" + locked +
                 ", credentialsExpired=" + credentialsExpired +
                 ", lastLoginDate=" + lastLoginDate +
+                ", person=" + person +
                 '}';
     }
 
