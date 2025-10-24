@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("tasks")
 public class TaskController {
     private final TaskService taskService;
     private final TaskDtoMapper mapper;
@@ -30,14 +32,14 @@ public class TaskController {
         this.mapper = mapper;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<TaskDto> createTask(@RequestBody @Valid TaskDto dto) {
         Task task = mapper.toDomain(dto);
         return ResponseEntity.ok(mapper.toDto(taskService.saveTask(task)));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<TaskDto> getTaskById(Long taskId) {
+    @GetMapping("/findById/{taskId}")
+    public ResponseEntity<TaskDto> getTaskById(@PathVariable Long taskId) {
         return ResponseEntity.ok(mapper.toDto(taskService.findTaskById(taskId)));
     }
 

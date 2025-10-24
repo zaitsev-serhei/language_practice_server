@@ -4,6 +4,8 @@ import com.language_practice_server.server_demo.common.enums.TaskDifficulty;
 import com.language_practice_server.server_demo.common.enums.TaskType;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.Instant;
+
 public class TaskTemplateDto {
     private Long id;
     @NotNull
@@ -18,16 +20,17 @@ public class TaskTemplateDto {
     //@NotNull
     private String instructions;
     //@NotNull
-    private Long creatorId;
-    private Long createdAt;
-    private boolean isDeleted;
+    private Long ownerId;
+    private boolean deleted;
+
+    private Instant createdAt;
 
     public TaskTemplateDto() {
     }
 
     public TaskTemplateDto(Long id, @NotNull String title, String description, @NotNull TaskType taskType,
                            @NotNull TaskDifficulty difficulty, String languageFrom, String languageTo,
-                           String instructions, Long creatorId, Long createdAt) {
+                           String instructions, Long ownerId, Instant createdAt) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -36,7 +39,7 @@ public class TaskTemplateDto {
         this.languageFrom = languageFrom;
         this.languageTo = languageTo;
         this.instructions = instructions;
-        this.creatorId = creatorId;
+        this.ownerId = ownerId;
         this.createdAt = createdAt;
     }
 
@@ -104,28 +107,28 @@ public class TaskTemplateDto {
         this.instructions = instructions;
     }
 
-    public Long getCreatorId() {
-        return creatorId;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public Long getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Long createdAt) {
+    public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
 
     public boolean isDeleted() {
-        return isDeleted;
+        return deleted;
     }
 
     public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
+        this.deleted = deleted;
     }
 
     @Override
@@ -136,9 +139,9 @@ public class TaskTemplateDto {
                 ", description='" + description + '\'' +
                 ", taskType=" + taskType +
                 ", difficulty=" + difficulty +
-                ", creatorId=" + creatorId +
+                ", creatorId=" + ownerId +
                 ", createdAt=" + createdAt +
-                ", isDeleted=" + isDeleted +
+                ", isDeleted=" + deleted +
                 '}';
     }
 }

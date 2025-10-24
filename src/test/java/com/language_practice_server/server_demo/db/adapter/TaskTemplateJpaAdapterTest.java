@@ -1,5 +1,6 @@
 package com.language_practice_server.server_demo.db.adapter;
 
+import com.language_practice_server.server_demo.config.TestAuditorConfig;
 import com.language_practice_server.server_demo.db.entity.TaskTemplateEntity;
 import com.language_practice_server.server_demo.db.repository.TaskTemplateRepositoryJpa;
 import com.language_practice_server.server_demo.common.enums.TaskType;
@@ -31,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
-@Import({TaskTemplateJpaAdapter.class, TaskTemplateMapperImpl.class})
+@Import({TaskTemplateJpaAdapter.class, TaskTemplateMapperImpl.class, TestAuditorConfig.class})
 public class TaskTemplateJpaAdapterTest {
     @Autowired
     private TaskTemplateRepositoryJpa repositoryJpa;
@@ -43,9 +44,9 @@ public class TaskTemplateJpaAdapterTest {
     void setup() {
         repositoryJpa.deleteAll();
         Long date = new Date().getTime();
-        TaskTemplateEntity template1 = new TaskTemplateEntity(null, "Test 1", TaskType.TEST, 1L, date);
-        TaskTemplateEntity template2 = new TaskTemplateEntity(null, "Test 2", TaskType.TEST, 1L, date);
-        TaskTemplateEntity template3 = new TaskTemplateEntity(null, "Test 3", TaskType.TEST, 2L, date);
+        TaskTemplateEntity template1 = new TaskTemplateEntity(null, "Test 1", TaskType.TEST, 1L);
+        TaskTemplateEntity template2 = new TaskTemplateEntity(null, "Test 2", TaskType.TEST, 1L);
+        TaskTemplateEntity template3 = new TaskTemplateEntity(null, "Test 3", TaskType.TEST, 2L);
         repositoryJpa.saveAll(List.of(template1, template2, template3));
         repositoryJpa.flush();
     }
@@ -53,7 +54,7 @@ public class TaskTemplateJpaAdapterTest {
     @Test
     public void saveReturnsTemplate() {
         Long date = new Date().getTime();
-        TaskTemplate template = new TaskTemplate(null, "Test 4", "test 4", 2L, date);
+        TaskTemplate template = new TaskTemplate(null, "Test 4", "test 4", TaskType.TEST, 2L);
         TaskTemplate result = templateRepository.save(template);
 
         assertNotNull(result.getId());
@@ -68,7 +69,7 @@ public class TaskTemplateJpaAdapterTest {
         Long date = new Date().getTime();
         TaskTemplateEntity existing = repositoryJpa.findAll().get(0);
         Long existingId = existing.getId();
-        TaskTemplate templateToUpdate = new TaskTemplate(existingId, "Test 5", "test 5", 2L, date);
+        TaskTemplate templateToUpdate = new TaskTemplate(existingId, "Test 5", "test 5", TaskType.TEST, 2L);
         TaskTemplate result = templateRepository.update(templateToUpdate);
 
         assertEquals(existingId, result.getId());
@@ -111,7 +112,7 @@ public class TaskTemplateJpaAdapterTest {
         Page<TaskTemplate> result = templateRepository.findAllTaskTemplateByCreatorId(1L, PageRequest.of(0, 10));
 
         AssertionsForInterfaceTypes.assertThat(result.getContent()).isNotEmpty();
-        AssertionsForInterfaceTypes.assertThat(result.getContent()).allMatch(r -> r.getCreatorId().equals(1L));
+        AssertionsForInterfaceTypes.assertThat(result.getContent()).allMatch(r -> r.getOwnerId().equals(1L));
         assertThat(result.getContent().size()).isEqualTo(2);
     }
 }

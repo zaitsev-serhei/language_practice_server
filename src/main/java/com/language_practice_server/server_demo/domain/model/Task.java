@@ -1,23 +1,27 @@
 package com.language_practice_server.server_demo.domain.model;
 
+import java.time.Instant;
 import java.util.Objects;
 
 public class Task {
     private Long id;
     private Long taskTemplateId;
-    private Long creatorId;
-    private Long createdAt;
+    private Long ownerId;
     private String instructions;
-    private boolean isDeleted;
+    private boolean deleted;
+
+    private Instant createdAt;
+    private Instant lastUpdatedAt;
+    private Long createdBy;
+    private Long lastModifiedBy;
 
     public Task() {
     }
 
-    public Task(Long id, Long taskTemplateId, Long creatorId, Long createdAt, String instructions) {
+    public Task(Long id, Long taskTemplateId, Long ownerId, String instructions) {
         this.id = id;
         this.taskTemplateId = taskTemplateId;
-        this.creatorId = creatorId;
-        this.createdAt = createdAt;
+        this.ownerId = ownerId;
         this.instructions = instructions;
     }
 
@@ -37,20 +41,12 @@ public class Task {
         this.taskTemplateId = taskTemplateId;
     }
 
-    public Long getCreatorId() {
-        return creatorId;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
-    }
-
-    public Long getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Long createdAt) {
-        this.createdAt = createdAt;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getInstructions() {
@@ -62,11 +58,43 @@ public class Task {
     }
 
     public boolean isDeleted() {
-        return isDeleted;
+        return deleted;
     }
 
     public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
+        this.deleted = deleted;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Instant getLastUpdatedAt() {
+        return lastUpdatedAt;
+    }
+
+    public void setLastUpdatedAt(Instant lastUpdatedAt) {
+        this.lastUpdatedAt = lastUpdatedAt;
+    }
+
+    public Long getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Long getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(Long lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 
     @Override
@@ -87,7 +115,7 @@ public class Task {
         return "Task{" +
                 "id=" + id +
                 ", taskTemplateId=" + taskTemplateId +
-                ", creatorId=" + creatorId +
+                ", creatorId=" + ownerId +
                 ", createdAt=" + createdAt +
                 '}';
     }
