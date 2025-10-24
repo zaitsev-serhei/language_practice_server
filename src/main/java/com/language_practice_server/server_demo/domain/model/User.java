@@ -11,26 +11,29 @@ public class User {
     private boolean active;
     private boolean locked;
     private boolean credentialsExpired;
+    private Person person;
 
     //For Spring / JSON / Mapper
     public User() {
     }
 
     //For when the object is already created (comes from DB)
-    public User(Long id, String userName, Role role, boolean locked, boolean credentialsExpired) {
+    public User(Long id, String userName, Role role, boolean locked, boolean credentialsExpired, Person person) {
         this.id = id;
         this.userName = userName;
         this.role = role;
         this.active = true; //Always active, when created.
         this.locked = locked;
         this.credentialsExpired = credentialsExpired;
+        this.person = person;
     }
 
     //For creating new user.
-    public User(String userName, Role role) {
+    public User(String userName, Role role, Person person) {
         //Long id, this.id = id; - created by DB.
         this.userName = userName;
         this.role = role;
+        this.person = person;
     }
 
     public boolean canLogin() {
@@ -101,6 +104,14 @@ public class User {
         this.credentialsExpired = credentialsExpired;
     }
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -110,6 +121,7 @@ public class User {
                 ", active=" + active +
                 ", locked=" + locked +
                 ", credentialsExpired=" + credentialsExpired +
+                ", person=" + person +
                 '}';
     }
 

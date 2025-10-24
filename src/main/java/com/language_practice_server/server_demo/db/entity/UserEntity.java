@@ -28,14 +28,14 @@ public class UserEntity{
     private boolean credentialsExpired;
     private LocalDateTime createdAt;
     private LocalDateTime lastLoginDate;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "person_id")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) //cascade = CascadeType.ALL - if the main object is deleted, associated object is deleted too
+    @JoinColumn(name = "person_id", referencedColumnName = "id") // referencedColumnName is optional; if omitted, the primary key of the referenced entity is assumed.
     private PersonEntity person;
 
     public UserEntity() {
     }
 
-    public UserEntity(Long id, String userName, String password, Role role, boolean active, boolean locked, boolean credentialsExpired, LocalDateTime createdAt, LocalDateTime lastLoginDate) {
+    public UserEntity(Long id, String userName, String password, Role role, boolean active, boolean locked, boolean credentialsExpired, LocalDateTime createdAt, LocalDateTime lastLoginDate, PersonEntity person) {
         this.id = id;
         this.userName = userName;
         this.password = password;
@@ -45,6 +45,7 @@ public class UserEntity{
         this.credentialsExpired = credentialsExpired;
         this.createdAt = createdAt;
         this.lastLoginDate = lastLoginDate;
+        this.person = person;
     }
 
     public Long getId() {
@@ -119,6 +120,14 @@ public class UserEntity{
         this.lastLoginDate = lastLoginDate;
     }
 
+    public PersonEntity getPerson() {
+        return person;
+    }
+
+    public void setPerson(PersonEntity person) {
+        this.person = person;
+    }
+
     @Override
     public String toString() {
         return "UserEntity{" +
@@ -130,6 +139,7 @@ public class UserEntity{
                 ", credentialsExpired=" + credentialsExpired +
                 ", createdDate=" + createdAt +
                 ", lastLoginDate=" + lastLoginDate +
+                ", person=" + person +
                 '}';
     }
 
@@ -137,11 +147,11 @@ public class UserEntity{
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         UserEntity that = (UserEntity) o;
-        return active == that.active && locked == that.locked && Objects.equals(id, that.id) && Objects.equals(userName, that.userName) && Objects.equals(password, that.password) && Objects.equals(role, that.role) && Objects.equals(credentialsExpired, that.credentialsExpired) && Objects.equals(createdAt, that.createdAt) && Objects.equals(lastLoginDate, that.lastLoginDate);
+        return active == that.active && locked == that.locked && Objects.equals(id, that.id) && Objects.equals(userName, that.userName) && Objects.equals(password, that.password) && Objects.equals(role, that.role) && Objects.equals(credentialsExpired, that.credentialsExpired) && Objects.equals(createdAt, that.createdAt) && Objects.equals(lastLoginDate, that.lastLoginDate) && Objects.equals(person, that.person);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userName, password, role, active, locked, credentialsExpired, createdAt, lastLoginDate);
+        return Objects.hash(id, userName, password, role, active, locked, credentialsExpired, createdAt, lastLoginDate, person);
     }
 }
