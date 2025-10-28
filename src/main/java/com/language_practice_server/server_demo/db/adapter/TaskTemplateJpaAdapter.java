@@ -55,7 +55,7 @@ public class TaskTemplateJpaAdapter implements TaskTemplateRepository {
 
     @Override
     public Page<TaskTemplate> findActiveTaskTemplateByCreatorId(Long creatorId, Pageable pageable) {
-        return repositoryJpa.findByOwnerIdAndDeletedFalse(creatorId, pageable);
+        return repositoryJpa.findByOwnerIdAndDeletedFalse(creatorId, pageable).map(templateMapper::toDomain);
     }
 
     @Override
