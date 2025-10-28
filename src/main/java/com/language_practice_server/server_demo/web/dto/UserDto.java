@@ -5,15 +5,17 @@ public class UserDto {
     //@NotNull, @Email, @Size - valid annotations.
     //@NotBlank - valid annotation
     private String userName;
+    private String password;
     //@Valid - valid annotation
     private PersonDto personDto;
 
     public UserDto() {
     }
 
-    public UserDto(Long id, String userName, PersonDto personDto) {
+    public UserDto(Long id, String userName, String password, PersonDto personDto) {
         this.id = id;
         this.userName = userName;
+        this.password = password;
         this.personDto = personDto;
     }
 
@@ -31,6 +33,14 @@ public class UserDto {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public PersonDto getPersonDto() {
