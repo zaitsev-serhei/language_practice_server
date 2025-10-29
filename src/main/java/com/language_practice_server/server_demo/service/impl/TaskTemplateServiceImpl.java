@@ -19,7 +19,7 @@ public class TaskTemplateServiceImpl implements TaskTemplateService {
     @Override
     @Transactional
     public TaskTemplate createTemplate(TaskTemplate template) {
-        if (template.getTitle() == null || template.getTitle().isBlank()) {
+        if (template.getTitle() == null || template.getTitle().isBlank() || template.getOwnerId() == null) {
             throw new IllegalArgumentException("Title must not be blank");
         }
         return templateRepository.save(template);
@@ -48,7 +48,7 @@ public class TaskTemplateServiceImpl implements TaskTemplateService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<TaskTemplate> findAllTaskTemplateByCreatorId(Long creatorId, Pageable pageable) {
+    public Page<TaskTemplate> findAllTaskTemplateByOwnerId(Long creatorId, Pageable pageable) {
         return templateRepository.findAllTaskTemplateByCreatorId(creatorId, pageable);
     }
 }

@@ -1,13 +1,13 @@
 package com.language_practice_server.server_demo.domain.model;
 
-import java.util.Date;
-
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Tag("domain")
 public class TaskTest {
     @Test
     public void gettersAndSetterAndEquals() {

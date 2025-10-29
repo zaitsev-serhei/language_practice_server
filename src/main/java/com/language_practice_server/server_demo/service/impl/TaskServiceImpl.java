@@ -18,8 +18,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public Task saveTask(Task task) {
-        if (task.getTaskTemplateId() == null) {
+    public Task createTask(Task task) {
+        if (task.getTaskTemplateId() == null || task.getOwnerId() == null) {
             throw new IllegalArgumentException("Task Template isn`t defined");
         }
         return taskRepository.saveTask(task);
@@ -51,7 +51,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Task> findAllTasksByCreatorId(Long creatorId, Pageable pageable) {
+    public Page<Task> findAllTasksByOwnerId(Long creatorId, Pageable pageable) {
         if (creatorId == null) {
             throw new IllegalArgumentException("Task id isn`t defined");
         }

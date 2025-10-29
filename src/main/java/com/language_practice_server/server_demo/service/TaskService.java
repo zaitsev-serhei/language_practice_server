@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface TaskService {
-    Task saveTask(Task task);
+    Task createTask(Task task);
 
     Task updateTask(Task task);
 
@@ -13,5 +13,5 @@ public interface TaskService {
 
     Task findTaskById(Long taskId);
 
-    Page<Task> findAllTasksByCreatorId(Long creatorId, Pageable pageable);
+    Page<Task> findAllTasksByOwnerId(Long creatorId, Pageable pageable);
 }

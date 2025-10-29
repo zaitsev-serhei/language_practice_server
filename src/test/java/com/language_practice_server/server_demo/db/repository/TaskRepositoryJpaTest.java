@@ -2,6 +2,7 @@ package com.language_practice_server.server_demo.db.repository;
 
 import com.language_practice_server.server_demo.config.TestAuditorConfig;
 import com.language_practice_server.server_demo.db.entity.TaskEntity;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -14,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Tag("jpa_repository")
 @DataJpaTest
 @Import(TestAuditorConfig.class)
 public class TaskRepositoryJpaTest {

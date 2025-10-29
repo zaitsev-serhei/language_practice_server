@@ -35,7 +35,7 @@ public class TaskController {
     @PostMapping("/create")
     public ResponseEntity<TaskDto> createTask(@RequestBody @Valid TaskDto dto) {
         Task task = mapper.toDomain(dto);
-        return ResponseEntity.ok(mapper.toDto(taskService.saveTask(task)));
+        return ResponseEntity.ok(mapper.toDto(taskService.createTask(task)));
     }
 
     @GetMapping("/findById/{taskId}")
@@ -49,7 +49,7 @@ public class TaskController {
                                             @RequestParam(defaultValue = "10") int size,
                                             @RequestParam(defaultValue = "id") String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-        Page<Task> tasksPage = taskService.findAllTasksByCreatorId(creatorId, pageable);
+        Page<Task> tasksPage = taskService.findAllTasksByOwnerId(creatorId, pageable);
         Page<TaskDto> dtoPage = tasksPage.map(mapper::toDto);
         if (dtoPage.isEmpty()) {
             return ResponseEntity.noContent().build();

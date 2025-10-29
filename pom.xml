@@ -113,6 +113,50 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.2.5</version>
+				<configuration>
+					<!-- Завжди активуємо тестовий профіль -->
+					<systemPropertyVariables>
+						<spring.profiles.active>test</spring.profiles.active>
+					</systemPropertyVariables>
+
+					<!-- Дозволяє фільтрацію за тегами -->
+					<properties>
+						<configurationParameters>
+							junit.jupiter.tags.allowMultipleTags=true
+						</configurationParameters>
+					</properties>
+					<includes>
+						<include>**/*Test.java</include>
+						<include>**/*Tests.java</include>
+					</includes>
+
+					<useModulePath>false</useModulePath>
+					<trimStackTrace>false</trimStackTrace>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>3.2.5</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includes>
+						<include>**/*IT.java</include>
+						<include>**/*IntegrationTest.java</include>
+					</includes>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>

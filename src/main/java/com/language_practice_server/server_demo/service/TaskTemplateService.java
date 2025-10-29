@@ -13,5 +13,5 @@ public interface TaskTemplateService {
 
     void deleteTemplate(Long templateId);
 
-    Page<TaskTemplate> findAllTaskTemplateByCreatorId(Long creatorId, Pageable pageable);
+    Page<TaskTemplate> findAllTaskTemplateByOwnerId(Long creatorId, Pageable pageable);
 }

@@ -6,6 +6,7 @@ import com.language_practice_server.server_demo.common.enums.TaskType;
 
 import java.util.Date;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@Tag("jpa_repository")
 @DataJpaTest
 @Import(TestAuditorConfig.class)
 public class TaskTemplateRepositoryJpaTest {
