@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationService {
-    private final UserRepositoryJpa userRepository;
+    private final UserRepositoryJpa userRepository; //use UserRepository domain level instead
     private final PasswordEncoder  passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
@@ -27,7 +27,7 @@ public class AuthenticationService {
     }
 
     public UserEntity signup(UserDto userDto) {
-        UserEntity userEntity = new UserEntity();
+        UserEntity userEntity = new UserEntity(); //use User() instead to work with UserRepository interface
         userEntity.setUserName(userDto.getUserName());
         userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
