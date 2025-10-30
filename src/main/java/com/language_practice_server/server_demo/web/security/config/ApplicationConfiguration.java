@@ -19,7 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class ApplicationConfiguration {
-    private final UserRepositoryJpa userRepositoryJpa;
+    private final UserRepositoryJpa userRepositoryJpa; //let`s use UserRepository domain level instead
 
     public ApplicationConfiguration(UserRepositoryJpa userRepositoryJpa) {
         this.userRepositoryJpa = userRepositoryJpa;
