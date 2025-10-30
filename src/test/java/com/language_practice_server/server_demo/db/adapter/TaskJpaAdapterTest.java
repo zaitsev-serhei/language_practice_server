@@ -1,5 +1,6 @@
 package com.language_practice_server.server_demo.db.adapter;
 
+import com.language_practice_server.server_demo.config.TestAuditorConfig;
 import com.language_practice_server.server_demo.db.entity.TaskEntity;
 import com.language_practice_server.server_demo.db.repository.TaskRepositoryJpa;
 import com.language_practice_server.server_demo.domain.model.Task;
@@ -28,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
-@Import({TaskJpaAdapter.class, TaskMapperImpl.class})
+@Import({TaskJpaAdapter.class, TaskMapperImpl.class, TestAuditorConfig.class})
 public class TaskJpaAdapterTest {
     @Autowired
     private TaskRepositoryJpa repositoryJpa;
@@ -39,9 +40,9 @@ public class TaskJpaAdapterTest {
     void setup() {
         repositoryJpa.deleteAll();
         Long date = new Date().getTime();
-        TaskEntity task1 = new TaskEntity(null, 1L, 100L, date, "instr");
-        TaskEntity task2 = new TaskEntity(null, 4L, 300L, date, "instr");
-        TaskEntity task3 = new TaskEntity(null, 4L, 300L, date, "instr");
+        TaskEntity task1 = new TaskEntity(null, 1L, 100L, "instr");
+        TaskEntity task2 = new TaskEntity(null, 4L, 300L, "instr");
+        TaskEntity task3 = new TaskEntity(null, 4L, 300L, "instr");
         repositoryJpa.saveAll(List.of(task1, task2, task3));
         repositoryJpa.flush();
         /*
@@ -53,7 +54,7 @@ public class TaskJpaAdapterTest {
     @Test
     public void saveReturnsTask() {
         Long date = new Date().getTime();
-        Task task4 = new Task(null, 4L, 300L, date, "instr");
+        Task task4 = new Task(null, 4L, 300L, "instr");
         Task result = taskRepository.saveTask(task4);
         assertNotNull(result.getId());
         assertFalse(result.isDeleted());
@@ -66,7 +67,7 @@ public class TaskJpaAdapterTest {
         Long date = new Date().getTime();
         TaskEntity existing = repositoryJpa.findAll().get(0);
         Long existingId = existing.getId();
-        Task taskToUpdate = new Task(existingId, 1L, 100L, date, "updated");
+        Task taskToUpdate = new Task(existingId, 1L, 100L, "updated");
         Task result = taskRepository.updateTask(taskToUpdate);
 
         assertEquals(existingId, result.getId());
@@ -106,7 +107,7 @@ public class TaskJpaAdapterTest {
         Page<Task> result = taskRepository.findAllTaskByCreatorId(300L, PageRequest.of(0, 10));
 
         assertThat(result.getContent()).isNotEmpty();
-        assertThat(result.getContent()).allMatch(r -> r.getCreatorId().equals(300L));
+        assertThat(result.getContent()).allMatch(r -> r.getOwnerId().equals(300L));
         assertThat(result.getContent().size()).isEqualTo(2);
     }
 }

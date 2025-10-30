@@ -51,12 +51,12 @@ public class TaskJpaAdapter implements TaskRepository {
 
     @Override
     public Page<Task> findActiveTaskByCreatorId(Long creatorId, Pageable pageable) {
-        return repositoryJpa.findByCreatorIdAndDeletedFalse(creatorId, pageable).map(taskMapper::toDomain);
+        return repositoryJpa.findByOwnerIdAndDeletedFalse(creatorId, pageable).map(taskMapper::toDomain);
     }
 
     @Override
     public Page<Task> findAllTaskByCreatorId(Long creatorId, Pageable pageable) {
-        return repositoryJpa.findByCreatorId(creatorId, pageable).map(taskMapper::toDomain);
+        return repositoryJpa.findByOwnerId(creatorId, pageable).map(taskMapper::toDomain);
     }
 
     @Override

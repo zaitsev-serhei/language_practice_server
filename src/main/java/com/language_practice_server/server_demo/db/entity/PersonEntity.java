@@ -1,5 +1,6 @@
 package com.language_practice_server.server_demo.db.entity;
 
+import com.language_practice_server.server_demo.audit.BaseAuditableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,11 +12,15 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "persons")
-public class PersonEntity {
+public class PersonEntity extends BaseAuditableEntity {
     @Id @GeneratedValue private Long id;
-    @Column(unique = true, nullable = false) private String email;
+    @Column(unique = true, nullable = false)
+    private String email;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "birth_date")
     private LocalDate birthDate;
     private String country;
     private String city;

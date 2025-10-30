@@ -3,6 +3,7 @@ package com.language_practice_server.server_demo.domain.model;
 import com.language_practice_server.server_demo.common.enums.TaskDifficulty;
 import com.language_practice_server.server_demo.common.enums.TaskType;
 
+import java.time.Instant;
 import java.util.Objects;
 
 public class TaskTemplate {
@@ -14,35 +15,38 @@ public class TaskTemplate {
     private String languageFrom;
     private String languageTo;
     private String instructions;
-    private Long creatorId;
-    private Long createdAt;
-    private boolean isDeleted;
+    private Long ownerId;
+    private boolean deleted;
+
+    private Instant createdAt;
+    private Instant lastUpdatedAt;
+    private Long createdBy;
+    private Long lastModifiedBy;
 
     public TaskTemplate() {
     }
 
     public TaskTemplate(Long id, String title, String description, TaskType taskType,
-                        TaskDifficulty difficulty, Long creatorId, Long createdAt) {
+                        TaskDifficulty difficulty, Long ownerId) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.taskType = taskType;
         this.difficulty = difficulty;
-        this.creatorId = creatorId;
-        this.createdAt = createdAt;
+        this.ownerId = ownerId;
     }
 
-    public TaskTemplate(Long id, String title, String description, Long creatorId, Long createdAt) {
+    public TaskTemplate(Long id, String title, String description, TaskType taskType, Long ownerId) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.creatorId = creatorId;
-        this.createdAt = createdAt;
+        this.taskType = taskType;
+        this.ownerId = ownerId;
     }
 
     public TaskTemplate(Long id, String title, String description, TaskType taskType,
                         TaskDifficulty difficulty, String languageFrom, String languageTo,
-                        String instructions, Long creatorId, Long createdAt) {
+                        String instructions, Long ownerId) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -51,8 +55,7 @@ public class TaskTemplate {
         this.languageFrom = languageFrom;
         this.languageTo = languageTo;
         this.instructions = instructions;
-        this.creatorId = creatorId;
-        this.createdAt = createdAt;
+        this.ownerId = ownerId;
     }
 
     public Long getId() {
@@ -119,28 +122,52 @@ public class TaskTemplate {
         this.instructions = instructions;
     }
 
-    public Long getCreatorId() {
-        return creatorId;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
-    }
-
-    public Long getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Long createdAt) {
-        this.createdAt = createdAt;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public boolean isDeleted() {
-        return isDeleted;
+        return deleted;
     }
 
     public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
+        this.deleted = deleted;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Instant getLastUpdatedAt() {
+        return lastUpdatedAt;
+    }
+
+    public void setLastUpdatedAt(Instant lastUpdatedAt) {
+        this.lastUpdatedAt = lastUpdatedAt;
+    }
+
+    public Long getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Long getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(Long lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 
     @Override
@@ -166,7 +193,7 @@ public class TaskTemplate {
                 ", difficulty=" + difficulty +
                 ", languageFrom='" + languageFrom + '\'' +
                 ", languageTo='" + languageTo + '\'' +
-                ", creatorId=" + creatorId +
+                ", creatorId=" + ownerId +
                 ", createdAt=" + createdAt +
                 '}';
     }

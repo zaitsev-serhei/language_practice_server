@@ -1,5 +1,6 @@
 package com.language_practice_server.server_demo.db.entity;
 
+import com.language_practice_server.server_demo.audit.BaseAuditableEntity;
 import com.language_practice_server.server_demo.common.enums.Role;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -18,15 +19,16 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-public class UserEntity{
-    @Id @GeneratedValue private Long id;
-    @Column(unique = true, nullable = false) private String userName;
+public class UserEntity extends BaseAuditableEntity {
+    @Id @GeneratedValue
+    private Long id;
+    @Column(unique = true, nullable = false)
+    private String userName;
     private String password;
     @Enumerated(EnumType.STRING) private Role role;
     private boolean active;
     private boolean locked;
     private boolean credentialsExpired;
-    private LocalDateTime createdAt;
     private LocalDateTime lastLoginDate;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) //cascade = CascadeType.ALL - if the main object is deleted, associated object is deleted too
     @JoinColumn(name = "person_id", referencedColumnName = "id") // referencedColumnName is optional; if omitted, the primary key of the referenced entity is assumed.
@@ -35,7 +37,7 @@ public class UserEntity{
     public UserEntity() {
     }
 
-    public UserEntity(Long id, String userName, String password, Role role, boolean active, boolean locked, boolean credentialsExpired, LocalDateTime createdAt, LocalDateTime lastLoginDate, PersonEntity person) {
+    public UserEntity(Long id, String userName, String password, Role role, boolean active, boolean locked, boolean credentialsExpired, LocalDateTime lastLoginDate) {
         this.id = id;
         this.userName = userName;
         this.password = password;
@@ -43,7 +45,6 @@ public class UserEntity{
         this.active = active;
         this.locked = locked;
         this.credentialsExpired = credentialsExpired;
-        this.createdAt = createdAt;
         this.lastLoginDate = lastLoginDate;
         this.person = person;
     }
@@ -104,14 +105,6 @@ public class UserEntity{
         this.credentialsExpired = credentialsExpired;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public LocalDateTime getLastLoginDate() {
         return lastLoginDate;
     }
@@ -137,7 +130,6 @@ public class UserEntity{
                 ", active=" + active +
                 ", locked=" + locked +
                 ", credentialsExpired=" + credentialsExpired +
-                ", createdDate=" + createdAt +
                 ", lastLoginDate=" + lastLoginDate +
                 ", person=" + person +
                 '}';
@@ -147,11 +139,11 @@ public class UserEntity{
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         UserEntity that = (UserEntity) o;
-        return active == that.active && locked == that.locked && Objects.equals(id, that.id) && Objects.equals(userName, that.userName) && Objects.equals(password, that.password) && Objects.equals(role, that.role) && Objects.equals(credentialsExpired, that.credentialsExpired) && Objects.equals(createdAt, that.createdAt) && Objects.equals(lastLoginDate, that.lastLoginDate) && Objects.equals(person, that.person);
+        return active == that.active && locked == that.locked && Objects.equals(id, that.id) && Objects.equals(userName, that.userName) && Objects.equals(password, that.password) && Objects.equals(role, that.role) && Objects.equals(credentialsExpired, that.credentialsExpired) && Objects.equals(lastLoginDate, that.lastLoginDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userName, password, role, active, locked, credentialsExpired, createdAt, lastLoginDate, person);
+        return Objects.hash(id, userName, password, role, active, locked, credentialsExpired, lastLoginDate);
     }
 }

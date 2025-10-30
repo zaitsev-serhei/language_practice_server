@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TaskTemplateRepositoryJpa extends JpaRepository<TaskTemplateEntity, Long> {
-    Page<TaskTemplateEntity> findByCreatorId(Long creatorId, Pageable page);
+    Page<TaskTemplateEntity> findByOwnerId(Long creatorId, Pageable page);
 
-    Page<TaskTemplate> findByCreatorIdAndDeletedFalse(Long creatorId, Pageable page);
+    Page<TaskTemplateEntity> findByOwnerIdAndDeletedFalse(Long creatorId, Pageable page);
 }

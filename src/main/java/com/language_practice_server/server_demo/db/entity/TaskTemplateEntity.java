@@ -1,7 +1,9 @@
 package com.language_practice_server.server_demo.db.entity;
 
+import com.language_practice_server.server_demo.audit.BaseAuditableEntity;
 import com.language_practice_server.server_demo.common.enums.TaskDifficulty;
 import com.language_practice_server.server_demo.common.enums.TaskType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -13,49 +15,53 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "task_templates")
-public class TaskTemplateEntity {
+public class TaskTemplateEntity extends BaseAuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "title", nullable = false)
     private String title;
     private String description;
     @Enumerated(EnumType.STRING)
+    @Column(name = "task_type", nullable = false)
     private TaskType taskType;
     @Enumerated(EnumType.STRING)
+    @Column(name = "difficulty")
     private TaskDifficulty difficulty;
+    @Column(name = "language_from")
     private String languageFrom;
+    @Column(name = "language_to")
     private String languageTo;
     @Lob
     private String instructions;
-    private Long creatorId;
-    private Long createdAt;
-    private boolean isDeleted = false;
+    @Column(name = "creator_id", nullable = false)
+    private Long ownerId;
+    @Column(name = "deleted")
+    private boolean deleted = false;
 
     public TaskTemplateEntity() {
     }
 
     public TaskTemplateEntity(Long id, String title, String description, TaskType taskType,
-                              TaskDifficulty difficulty, Long creatorId, Long createdAt) {
+                              TaskDifficulty difficulty, Long ownerId) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.taskType = taskType;
         this.difficulty = difficulty;
-        this.creatorId = creatorId;
-        this.createdAt = createdAt;
+        this.ownerId = ownerId;
     }
 
-    public TaskTemplateEntity(Long id, String title, TaskType taskType, Long creatorId, Long createdAt) {
+    public TaskTemplateEntity(Long id, String title, TaskType taskType, Long ownerId) {
         this.id = id;
         this.title = title;
         this.taskType = taskType;
-        this.creatorId = creatorId;
-        this.createdAt = createdAt;
+        this.ownerId = ownerId;
     }
 
     public TaskTemplateEntity(Long id, String title, String description, TaskType taskType,
                               TaskDifficulty difficulty, String languageFrom, String languageTo,
-                              String instructions, Long creatorId, Long createdAt) {
+                              String instructions, Long ownerId) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -64,8 +70,7 @@ public class TaskTemplateEntity {
         this.languageFrom = languageFrom;
         this.languageTo = languageTo;
         this.instructions = instructions;
-        this.creatorId = creatorId;
-        this.createdAt = createdAt;
+        this.ownerId = ownerId;
     }
 
     public Long getId() {
@@ -132,43 +137,21 @@ public class TaskTemplateEntity {
         this.instructions = instructions;
     }
 
-    public Long getCreatorId() {
-        return creatorId;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
-    }
-
-    public Long getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Long createdAt) {
-        this.createdAt = createdAt;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
 
     public boolean isDeleted() {
-        return isDeleted;
+        return deleted;
     }
 
     public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TaskTemplateEntity that = (TaskTemplateEntity) o;
-        if (getId() == null || that.getId() == null) return false;
-        return getId().equals(that.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return (id != null) ? id.hashCode() : System.identityHashCode(this);
+        this.deleted = deleted;
     }
 
     @Override
@@ -179,8 +162,8 @@ public class TaskTemplateEntity {
                 ", description='" + description + '\'' +
                 ", taskType=" + taskType +
                 ", difficulty=" + difficulty +
-                ", creatorId=" + creatorId +
-                ", createdAt=" + createdAt +
+                ", creatorId=" + ownerId +
+                ", createdAt=" + super.getCreatedAt() +
                 '}';
     }
 }

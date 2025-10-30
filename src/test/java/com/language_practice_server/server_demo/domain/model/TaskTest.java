@@ -11,16 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TaskTest {
     @Test
     public void gettersAndSetterAndEquals() {
-        Long date = new Date().getTime();
-        Task task1 = new Task(1L, 100L, 200L, date, "instr");
-        Task task2 = new Task(1L, 100L, 200L, date, "instr");
-        Task task3 = new Task(2L, 200L, 300L, date, "instr");
+        Task task1 = new Task(1L, 100L, 200L, "instr");
+        Task task2 = new Task(1L, 100L, 200L, "instr");
+        Task task3 = new Task(2L, 200L, 300L, "instr");
 
         //getters
         assertEquals(1L, task1.getId());
         assertEquals(100L, task1.getTaskTemplateId());
-        assertEquals(200L, task1.getCreatorId());
-        assertEquals(date, task1.getCreatedAt());
+        assertEquals(200L, task1.getOwnerId());
         assertTrue(task1.getInstructions().contains("instr"));
 
         //equals

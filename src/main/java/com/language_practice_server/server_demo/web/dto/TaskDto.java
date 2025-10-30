@@ -2,26 +2,28 @@ package com.language_practice_server.server_demo.web.dto;
 
 import jakarta.validation.constraints.NotNull;
 
+import java.time.Instant;
+
 public class TaskDto {
     private Long id;
     @NotNull
     private Long taskTemplateId;
     @NotNull
-    private Long creatorId;
-    private Long createdAt;
+    private Long ownerId;
     //@NotNull
     private String instructions;
-    private boolean isDeleted;
+    private boolean deleted;
+
+    private Instant createdAt;
 
     public TaskDto() {
 
     }
 
-    public TaskDto(Long id, @NotNull Long taskTemplateId, @NotNull Long creatorId, Long createdAt, String instructions) {
+    public TaskDto(Long id, @NotNull Long taskTemplateId, @NotNull Long ownerId, String instructions) {
         this.id = id;
         this.taskTemplateId = taskTemplateId;
-        this.creatorId = creatorId;
-        this.createdAt = createdAt;
+        this.ownerId = ownerId;
         this.instructions = instructions;
     }
 
@@ -41,20 +43,12 @@ public class TaskDto {
         this.taskTemplateId = taskTemplateId;
     }
 
-    public Long getCreatorId() {
-        return creatorId;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
-    }
-
-    public Long getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Long createdAt) {
-        this.createdAt = createdAt;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getInstructions() {
@@ -66,11 +60,19 @@ public class TaskDto {
     }
 
     public boolean isDeleted() {
-        return isDeleted;
+        return deleted;
     }
 
     public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
+        this.deleted = deleted;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override
@@ -78,10 +80,10 @@ public class TaskDto {
         return "TaskDto{" +
                 "id=" + id +
                 ", taskTemplateId=" + taskTemplateId +
-                ", creatorId=" + creatorId +
+                ", creatorId=" + ownerId +
                 ", createdAt=" + createdAt +
                 ", instructions='" + instructions + '\'' +
-                ", isDeleted=" + isDeleted +
+                ", isDeleted=" + deleted +
                 '}';
     }
 }
