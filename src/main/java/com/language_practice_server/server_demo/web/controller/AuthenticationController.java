@@ -31,7 +31,7 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> register(@RequestBody UserDto userDto) {
-        UserEntity userEntity = authenticationService.signup(userDto);
+        UserEntity userEntity = authenticationService.signup(userDto); // let`s use User domain level
         String token = jwtService.generateToken(new CustomUserDetails(userEntity));
 
         return ResponseEntity.ok(Map.of("token", token));
