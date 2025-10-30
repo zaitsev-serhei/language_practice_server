@@ -1,7 +1,7 @@
 package com.language_practice_server.server_demo.config;
 
-import com.language_practice_server.server_demo.security.SecurityAuditorAware;
-import com.language_practice_server.server_demo.security.SystemAuditorAware;
+//import com.language_practice_server.server_demo.security.SecurityAuditorAware;
+import com.language_practice_server.server_demo.web.security.SystemAuditorAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;

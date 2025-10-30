@@ -1,4 +1,4 @@
-package com.language_practice_server.server_demo.security;
+package com.language_practice_server.server_demo.web.security;
 
 import org.springframework.data.domain.AuditorAware;
 
