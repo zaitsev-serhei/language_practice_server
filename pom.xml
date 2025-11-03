@@ -32,79 +32,101 @@
 		<maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
 	</properties>
 	<dependencies>
+        <!-- ==================== CORE DEPENDENCIES ==================== -->
+
+        <!--    Spring Data JPA, Repos, Entity, Transactional    -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+        <!--    Authentication, Authorization, Filters, PassEncoder    -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+        <!--    REST API, controllers, JSON(jackson), Validation, Exceptions    -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+        <!--    Automatically reload .jar file "on-fly" with an updated code from classes    -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+        <!--    PostgreSQL driver, db connection    -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<!--<scope>runtime</scope>-->
-			<scope>compile</scope>
+			<scope>runtime</scope>
 		</dependency>
+
+        <!-- ==================== TEST DEPENDENCIES ==================== -->
+
+        <!--    Main tests for Spring Boot, contains: JUnit 5, AssertJ, Hamcrest, Mockito, MockMvc, TestContext    -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+        <!--    Spring Security tests (@WithMockUser, .with(csrf()), roles checks, integration with MockMvc)    -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct</artifactId>
-			<version>${mapstruct.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>jakarta.validation</groupId>
-			<artifactId>jakarta.validation-api</artifactId>
-			<version>3.0.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-junit-jupiter</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<!--<scope>test</scope>-->
-			<scope>runtime</scope>
-		</dependency>
+        <!--    Mockito + JUnit 5 tests for Unit-testing, w/o Spring context    -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--    Light im-memory database for integration tests/local development    -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <!--<scope>test</scope>-->
+            <scope>runtime</scope>
+        </dependency>
 
-        <!-- Spring Security JWT-JSON WEB TOKEN dependencies -->
+        <!-- ==================== SPRING SECURITY: JWT ==================== -->
+
+        <!--    Interfaces and base classes for create/parse tokens    -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
             <version>0.11.5</version>
         </dependency>
+        <!--    Implementation of the API JWT, contains: signature algorithms, Claims processing, validation    -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
             <version>0.11.5</version>
         </dependency>
+        <!--    JSON-serialization through jackson(claims into json, and vice versa)     -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
             <version>0.11.5</version>
         </dependency>
-	</dependencies>
+
+        <!-- ==================== ADDITIONAL UTILITIES ==================== -->
+
+        <!--    Mappers between DTO and Entity    -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+        <!--    Jakarta Bean Validation API (@NotNull, @Email, @Size etc)     -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+    </dependencies>
 
 
 	<build>
