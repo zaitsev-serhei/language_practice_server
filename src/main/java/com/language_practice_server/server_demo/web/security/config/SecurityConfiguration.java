@@ -24,8 +24,8 @@ public class SecurityConfiguration {
         //1.2. decompose security context
         http.authorizeHttpRequests(
                 (requests) -> requests
-                        .requestMatchers("/tasks/**", "/tasktemplate/**", "/users/**", "/persons/**").authenticated()
-                        .requestMatchers("/auth/**", "/vacancies", "/about", "/forStudents", "/forTeachers", "/error").permitAll()
+                        .requestMatchers( "/tasktemplate/**", "/users/**", "/persons/**").authenticated()
+                        .requestMatchers("/auth/**","/tasks/**", "/vacancies", "/about", "/forStudents", "/forTeachers", "/error").permitAll()
         );
 
         //2. whenever unauthorized user is trying to reach e.g. "../tasks/1", security will redirect him to the home page.
