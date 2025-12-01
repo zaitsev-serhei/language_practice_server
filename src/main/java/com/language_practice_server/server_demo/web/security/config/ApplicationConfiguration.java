@@ -19,36 +19,36 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class ApplicationConfiguration {
-    private final UserRepositoryJpa userRepositoryJpa; //let`s use UserRepository domain level instead
-
-    public ApplicationConfiguration(UserRepositoryJpa userRepositoryJpa) {
-        this.userRepositoryJpa = userRepositoryJpa;
-    }
-
-    @Bean
-    UserDetailsService userDetailsService() {
-        return username -> userRepositoryJpa.findByUserName(username)
-                .map(CustomUserDetails::new) //lambda-expression, or ".map(userEntity -> new CustomUserDetails(userEntity))"
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
-
-    @Bean
-    BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
-
-    @Bean
-    AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-
-        authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(passwordEncoder());
-
-        return authProvider;
-    }
+//    private final UserRepositoryJpa userRepositoryJpa; //let`s use UserRepository domain level instead
+//
+//    public ApplicationConfiguration(UserRepositoryJpa userRepositoryJpa) {
+//        this.userRepositoryJpa = userRepositoryJpa;
+//    }
+//
+//    @Bean
+//    UserDetailsService userDetailsService() {
+//        return username -> userRepositoryJpa.findByUserName(username)
+//                .map(CustomUserDetails::new) //lambda-expression, or ".map(userEntity -> new CustomUserDetails(userEntity))"
+//                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+//    }
+//
+//    @Bean
+//    BCryptPasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+//
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+//        return config.getAuthenticationManager();
+//    }
+//
+//    @Bean
+//    AuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//
+//        authProvider.setUserDetailsService(userDetailsService());
+//        authProvider.setPasswordEncoder(passwordEncoder());
+//
+//        return authProvider;
+//    }
 }

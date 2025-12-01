@@ -8,6 +8,7 @@ public class User {
     private Long id;
     private String userName;
     private Role role;
+    private String email;
     private boolean active;
     private boolean locked;
     private boolean credentialsExpired;
@@ -18,9 +19,10 @@ public class User {
     }
 
     //For when the object is already created (comes from DB)
-    public User(Long id, String userName, Role role, boolean locked, boolean credentialsExpired, Person person) {
+    public User(Long id, String userName,String email, Role role, boolean locked, boolean credentialsExpired, Person person) {
         this.id = id;
         this.userName = userName;
+        this.email = email;
         this.role = role;
         this.active = true; //Always active, when created.
         this.locked = locked;
@@ -70,6 +72,14 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Role getRole() {

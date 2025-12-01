@@ -25,6 +25,8 @@ public class UserEntity extends BaseAuditableEntity {
     @Column(unique = true, nullable = false)
     private String userName;
     private String password;
+    @Column(unique = true, nullable = false)
+    private String email;
     @Enumerated(EnumType.STRING) private Role role;
     private boolean active;
     private boolean locked;
@@ -37,16 +39,16 @@ public class UserEntity extends BaseAuditableEntity {
     public UserEntity() {
     }
 
-    public UserEntity(Long id, String userName, String password, Role role, boolean active, boolean locked, boolean credentialsExpired, LocalDateTime lastLoginDate) {
+    public UserEntity(Long id, String userName, String password, String email, Role role, boolean active, boolean locked, boolean credentialsExpired, LocalDateTime lastLoginDate) {
         this.id = id;
         this.userName = userName;
         this.password = password;
+        this.email = email;
         this.role = role;
         this.active = active;
         this.locked = locked;
         this.credentialsExpired = credentialsExpired;
         this.lastLoginDate = lastLoginDate;
-        this.person = person;
     }
 
     public Long getId() {
@@ -71,6 +73,14 @@ public class UserEntity extends BaseAuditableEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Role getRole() {
@@ -133,17 +143,5 @@ public class UserEntity extends BaseAuditableEntity {
                 ", lastLoginDate=" + lastLoginDate +
                 ", person=" + person +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        UserEntity that = (UserEntity) o;
-        return active == that.active && locked == that.locked && Objects.equals(id, that.id) && Objects.equals(userName, that.userName) && Objects.equals(password, that.password) && Objects.equals(role, that.role) && Objects.equals(credentialsExpired, that.credentialsExpired) && Objects.equals(lastLoginDate, that.lastLoginDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, userName, password, role, active, locked, credentialsExpired, lastLoginDate);
     }
 }
