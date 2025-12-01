@@ -4,6 +4,7 @@ import com.language_practice_server.server_demo.common.enums.AssignmentStatus;
 import com.language_practice_server.server_demo.config.TestAuditorConfig;
 import com.language_practice_server.server_demo.db.entity.AssignmentEntity;
 import com.language_practice_server.server_demo.domain.model.Assignment;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -16,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@Tag("jpa_repository")
 @DataJpaTest
 @Import(TestAuditorConfig.class)
 public class AssignmentRepositoryJpaTest {

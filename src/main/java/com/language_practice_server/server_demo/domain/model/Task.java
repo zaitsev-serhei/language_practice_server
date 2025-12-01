@@ -9,7 +9,6 @@ public class Task {
     private Long ownerId;
     private String instructions;
     private boolean deleted;
-
     private Instant createdAt;
     private Instant lastUpdatedAt;
     private Long createdBy;

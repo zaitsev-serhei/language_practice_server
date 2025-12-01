@@ -8,7 +8,6 @@ import java.util.Optional;
 @Repository
 public interface PersonRepository {
     Optional<Person> findPersonById(Long id);
-    Optional<Person> findPersonByEmail(String email);
     Person savePerson(Person person);
     void deletePersonById(Long id);
 }

@@ -11,29 +11,22 @@ import java.util.Optional;
 
 @Repository
 public class PersonJpaAdapter implements PersonRepository {
-    private PersonRepositoryJpa personRepositoryJpa;
-    private PersonMapper personMapper;
+    private final PersonRepositoryJpa personRepositoryJpa;
+    private final PersonMapper personMapper;
 
-    @Override
-    public Optional<Person> findPersonById(Long id) {
-        if (id == null) {
-            return Optional.empty();
-        }
-        return personRepositoryJpa.findById(id).map(personMapper::toModel);
+    public PersonJpaAdapter(PersonRepositoryJpa personRepositoryJpa, PersonMapper personMapper) {
+        this.personRepositoryJpa = personRepositoryJpa;
+        this.personMapper = personMapper;
     }
 
     @Override
-    public Optional<Person> findPersonByEmail(String email) {
-        if (email == null) {
-            return Optional.empty();
-        }
-        return personRepositoryJpa.findByEmail(email).map(personMapper::toModel);
+    public Optional<Person> findPersonById(Long id) {
+        return personRepositoryJpa.findById(id).map(personMapper::toModel);
     }
 
     @Override
     public Person savePerson(Person person) {
         PersonEntity personEntity = personRepositoryJpa.save(personMapper.toEntity(person));
-
         return personMapper.toModel(personEntity);
     }
 

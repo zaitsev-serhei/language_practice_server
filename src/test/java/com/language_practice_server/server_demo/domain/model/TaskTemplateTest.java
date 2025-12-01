@@ -5,12 +5,14 @@ import com.language_practice_server.server_demo.common.enums.TaskType;
 
 import java.time.Instant;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Tag("domain")
 public class TaskTemplateTest {
     @Test
     public void gettersAndSetterAndEquals() {

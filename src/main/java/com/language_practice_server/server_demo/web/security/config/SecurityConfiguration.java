@@ -1,11 +1,21 @@
 package com.language_practice_server.server_demo.web.security.config;
 
+import com.language_practice_server.server_demo.web.security.handler.OAuth2AuthenticationSuccessHandler;
+import com.language_practice_server.server_demo.web.security.service.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import static org.springframework.security.config.Customizer.withDefaults;
+
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Main security configuration class.
@@ -14,30 +24,59 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfiguration {
+    private final OAuth2AuthenticationSuccessHandler oauth2SuccessHandler;
+    private final OAuth2AuthorizedClientService authorizedClientService;
+    private final JwtTokenProvider tokenProvider;
+
+    public SecurityConfiguration(OAuth2AuthenticationSuccessHandler oauth2SuccessHandler,
+                                 OAuth2AuthorizedClientService authorizedClientService, JwtTokenProvider tokenProvider) {
+        this.oauth2SuccessHandler = oauth2SuccessHandler;
+        this.authorizedClientService = authorizedClientService;
+        this.tokenProvider = tokenProvider;
+    }
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity  http) throws Exception {
-        //1.1. all requests on the UI side would be authenticated
-//        http.authorizeHttpRequests(
-//                auth -> auth.anyRequest().authenticated()
-//        );
-        //1.2. decompose security context
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/api/**")
+                        .allowedOrigins("http://localhost:5173") // або props.frontend allowed origins
+                        .allowCredentials(true)
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
+            }
+        };
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        JwtAuthenticationFilter jwtFilter = new JwtAuthenticationFilter(tokenProvider);
         http.authorizeHttpRequests(
                 (requests) -> requests
-                        .requestMatchers("/tasks/**", "/tasktemplate/**", "/users/**", "/persons/**").authenticated()
+                        .requestMatchers("/tasktemplate/**", "/tasks/**", "/users/**", "/persons/**").authenticated()
+                        .requestMatchers("/api/oauth2/**", "/api/auth/**", "/public/**", "/oauth2/**", "/login/**").permitAll()
                         .requestMatchers("/auth/**", "/vacancies", "/about", "/forStudents", "/forTeachers", "/error").permitAll()
-        );
+        )
+                .exceptionHandling(handler -> handler.authenticationEntryPoint(new JwtAuthenticationEntryPoint()))
+                .addFilterBefore(jwtFilter, OAuth2LoginAuthenticationFilter.class)
+                .oauth2Login(oauth2 -> oauth2
+                        .authorizedClientService(authorizedClientService)
+                        .successHandler(oauth2SuccessHandler)
+                        .failureHandler((req, res, ex) -> {
+                            // редіректимо на фронт з повідомленням про помилку
+                            String redirect = "http://localhost:5173/oauth2/callback/google?oauth_error=" +
+                                    URLEncoder.encode(ex.getMessage(), StandardCharsets.UTF_8);
+                            res.sendRedirect(redirect);
+                        })
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/api/auth/logout")
+                );
 
-        //2. whenever unauthorized user is trying to reach e.g. "../tasks/1", security will redirect him to the home page.
-        http.formLogin(withDefaults());
-        //3. show a web page, if a request is not authenticated
-        http.httpBasic(/*Customizer.*/withDefaults());
-        //4.csrf protection - against fake post/put/delete requests via third-party sites
-        //old code (before spring security 6.1)
-        //http.csrf().disable();
-        //new way using lamba-configuration(expression):
-        http.csrf(csrf -> csrf.disable()); //or http.csrf(AbstractHttpConfigurer::disable);
-
+        http.csrf(csrf -> csrf.disable());
+        http.formLogin(form -> form.disable());
         return http.build();
     }
 }

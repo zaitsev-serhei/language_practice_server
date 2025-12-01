@@ -17,8 +17,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person savePerson(Person person) {
-        personRepository.findPersonByEmail(person.getEmail())
-                .ifPresent(p -> {throw new RuntimeException("Person already exists");});
+//        personRepository.findPersonByEmail(person.getEmail())
+//                .ifPresent(p -> {throw new RuntimeException("Person already exists");});
 
         return personRepository.savePerson(person);
     }

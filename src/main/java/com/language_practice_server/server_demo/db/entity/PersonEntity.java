@@ -13,9 +13,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "persons")
 public class PersonEntity extends BaseAuditableEntity {
-    @Id @GeneratedValue private Long id;
-    @Column(unique = true, nullable = false)
-    private String email;
+    @Id @GeneratedValue
+    private Long id;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -28,9 +27,8 @@ public class PersonEntity extends BaseAuditableEntity {
     public PersonEntity() {
     }
 
-    public PersonEntity(Long id, String email, String firstName, String lastName, LocalDate birthDate, String country, String city) {
+    public PersonEntity(Long id, String firstName, String lastName, LocalDate birthDate, String country, String city) {
         this.id = id;
-        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
@@ -44,14 +42,6 @@ public class PersonEntity extends BaseAuditableEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getFirstName() {
@@ -98,7 +88,6 @@ public class PersonEntity extends BaseAuditableEntity {
     public String toString() {
         return "PersonEntity{" +
                 "id=" + id +
-                ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthDate=" + birthDate +
@@ -111,11 +100,11 @@ public class PersonEntity extends BaseAuditableEntity {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         PersonEntity that = (PersonEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(email, that.email) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(birthDate, that.birthDate) && Objects.equals(country, that.country) && Objects.equals(city, that.city);
+        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(birthDate, that.birthDate) && Objects.equals(country, that.country) && Objects.equals(city, that.city);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, firstName, lastName, birthDate, country, city);
+        return Objects.hash(id, firstName, lastName, birthDate, country, city);
     }
 }

@@ -5,7 +5,6 @@ import java.util.Objects;
 
 public class Person {
     private Long id;
-    private String email;
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
@@ -15,9 +14,8 @@ public class Person {
     public Person() {
     }
 
-    public Person(Long id, String email, String firstName, String lastName, LocalDate birthDate, String country, String city) {
+    public Person(Long id, String firstName, String lastName, LocalDate birthDate, String country, String city) {
         this.id = id;
-        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
@@ -25,8 +23,7 @@ public class Person {
         this.city = city;
     }
 
-    public Person(String email, String firstName, String lastName) {
-        this.email = email;
+    public Person(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -41,14 +38,6 @@ public class Person {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getFirstName() {
@@ -95,7 +84,6 @@ public class Person {
     public String toString() {
         return "Person{" +
                 "id=" + id +
-                ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthDate=" + birthDate +

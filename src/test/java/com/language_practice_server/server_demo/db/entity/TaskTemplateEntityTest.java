@@ -1,12 +1,14 @@
 package com.language_practice_server.server_demo.db.entity;
 
 import com.language_practice_server.server_demo.common.enums.TaskType;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Tag("entity")
 public class TaskTemplateEntityTest {
     @Test
     public void gettersAndToString() {

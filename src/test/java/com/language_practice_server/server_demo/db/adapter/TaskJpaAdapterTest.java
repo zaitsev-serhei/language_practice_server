@@ -12,6 +12,7 @@ import java.util.Optional;
 import com.language_practice_server.server_demo.domain.repository.TaskRepository;
 import com.language_practice_server.server_demo.mapper.TaskMapperImpl;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -27,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Tag("adapter")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 @Import({TaskJpaAdapter.class, TaskMapperImpl.class, TestAuditorConfig.class})
@@ -39,7 +41,6 @@ public class TaskJpaAdapterTest {
     @BeforeEach
     void setup() {
         repositoryJpa.deleteAll();
-        Long date = new Date().getTime();
         TaskEntity task1 = new TaskEntity(null, 1L, 100L, "instr");
         TaskEntity task2 = new TaskEntity(null, 4L, 300L, "instr");
         TaskEntity task3 = new TaskEntity(null, 4L, 300L, "instr");
