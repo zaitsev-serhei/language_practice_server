@@ -118,6 +118,53 @@ GET /tasks/creator/{creatorId} — get tasks by creator
 
 Kafka events are automatically published when creating tasks and assignments(TBD).
 
+# 🔐 OAuth2 Authorization + Custom JWT Integration
+
+The project now includes full support for Google OAuth2 login combined with a custom-authentication flow using JWT tokens.
+Key features:
+
+1. Custom JWT Access & Refresh token system
+
+2. Custom filter: JwtAuthenticationFilter
+
+3. OAuth2 login bootstrap controller: OAuth2InitiateController
+
+4. Post-authentication handler: OAuth2AuthenticationSuccessHandler
+
+5. Custom Spring Security configuration: SecurityConfiguration
+
+6. Refresh token persistence in DB (RefreshTokenEntity + Repository + Adapter)
+
+This setup allows blending standard OAuth2 authentication with your own token-issuing mechanism.
+
+# 🛠 Required application.properties Configuration
+
+To enable OAuth2 functionality, add the following properties:
+ 
+  1. Google OAuth2 Integration
+spring.security.oauth2.client.registration.google.client-id=YOUR_GOOGLE_CLIENT_ID
+spring.security.oauth2.client.registration.google.client-secret=YOUR_GOOGLE_CLIENT_SECRET
+
+  2. OAuth2 redirect URL
+app.oauth.redirect-base=https://your-backend.example.com/api/oauth2/callback/google
+ 
+  3. Secure Cookie Configuration</br>
+refresh.cookie.name=REFRESH_TOKEN</br>
+refresh.cookie.http-only=true</br>
+refresh.cookie.secure=true</br>
+refresh.cookie.same-site=Lax</br>
+refresh.cookie.max-age=2592000
+
+# ⚠  !!!IMPORTANT: Time Synchronization Required
+OAuth2 token validation will fail if there is a time drift greater than ±5 minutes between:
+ - your local machine
+ - your backend (server)
+ - Google servers
+ 
+To prevent this:</br>
+ - Enable NTP automatic time sync
+ - manually configure
+
 # Authors
 
 Sir Beard — https://github.com/Sir-Beard
