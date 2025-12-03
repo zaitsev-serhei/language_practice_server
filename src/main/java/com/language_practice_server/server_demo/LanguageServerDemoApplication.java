@@ -8,6 +8,7 @@ public class LanguageServerDemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LanguageServerDemoApplication.class, args);
+
 	}
 
 }
