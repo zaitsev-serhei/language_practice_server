@@ -4,10 +4,19 @@
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.6-brightgreen)](https://spring.io/projects/spring-boot)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-blue)](https://www.postgresql.org/)
 [![Kafka](https://img.shields.io/badge/Kafka-3.6-yellow)](https://kafka.apache.org/)
+[![OpenAPI](https://img.shields.io/badge/OpenAPI-2.8.14-green)](https://swagger.io/)
+
 
 ## Project Description
 Language Practice Server is a backend for mobile and web applications for language learning and managing educational tasks.  
 The project follows **Clean Architecture principles**, separating domain, database, service, and controller layers.
+## API Documentation (Swagger / OpenAPI)
+This project includes built-in API documentation using Swagger UI and Springdoc OpenAPI.
+Once the application is running, you can access the interactive API documentation at:
+
+👉 http://localhost:8080/swagger-ui/index.html
+
+The Swagger UI allows you to explore REST endpoints, view request/response models
 
 ### Main Modules and Packages
 
