@@ -36,23 +36,27 @@ public class TaskController {
         this.mapper = mapper;
     }
 
-    @Operation(summary = "Create new Task", description = "Creates a task and return dto with an id of the item created")
+    @Operation(summary = "Create new Task", description = "Creates a task and returns DTO with an id of the item created")
     @ApiResponse(responseCode = "201", description = "Task Created")
     @PostMapping("/create")
     public ResponseEntity<TaskDto> createTask(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "Task dto with valid fields"
+                    description = "Task DTO with valid fields"
                     , required = true)
             @RequestBody @Valid TaskDto dto) {
         Task task = mapper.toDomain(dto);
         return ResponseEntity.ok(mapper.toDto(taskService.createTask(task)));
     }
 
+    @Operation(summary = "Find Task by id", description = "Return a task if found")
+    @ApiResponse(responseCode = "201", description = "Find a task by id")
     @GetMapping("/findById/{taskId}")
     public ResponseEntity<TaskDto> getTaskById(@PathVariable Long taskId) {
         return ResponseEntity.ok(mapper.toDto(taskService.findTaskById(taskId)));
     }
 
+    @Operation(summary = "Find Tasks by ownerId", description = "Returns a page of tasks created by owner. Page result is predefined if missing")
+    @ApiResponse(responseCode = "201", description = "Find Tasks by ownerId")
     @GetMapping("/creator/{creatorId}")
     public ResponseEntity<Page<TaskDto>> getTaskByCreatorId(@PathVariable Long creatorId,
                                                             @RequestParam(defaultValue = "0") int page,
@@ -67,6 +71,8 @@ public class TaskController {
         return ResponseEntity.ok(dtoPage);
     }
 
+    @Operation(summary = "Delete a Task", description = "Marks the Task as Deleted but stores in DB")
+    @ApiResponse(responseCode = "204", description = "Task Deleted")
     @DeleteMapping("/{taskId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTask(@PathVariable Long taskId) {
