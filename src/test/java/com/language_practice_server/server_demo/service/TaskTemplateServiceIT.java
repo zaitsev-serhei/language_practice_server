@@ -3,13 +3,19 @@ package com.language_practice_server.server_demo.service;
 import com.language_practice_server.server_demo.common.enums.TaskType;
 import com.language_practice_server.server_demo.domain.model.TaskTemplate;
 import com.language_practice_server.server_demo.domain.repository.TaskTemplateRepository;
+import java.util.List;
 import java.util.Optional;
+import com.language_practice_server.server_demo.web.security.config.JwtAuthenticationFilter;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -17,14 +23,25 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("service")
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @Transactional
-public class TaskTemplateIT {
+public class TaskTemplateServiceIT {
+
     @Autowired
     private TaskTemplateService service;
 
     @Autowired
     private TaskTemplateRepository repository;
+
+    /*
+        setting up mock Authentication to allow SecurityAudit configuration for proper DB access
+     */
+    @BeforeEach
+    public void setUp(){
+        JwtAuthenticationFilter.AuthenticatedUser principal = new JwtAuthenticationFilter.AuthenticatedUser(111L, "test user");
+        var auth = new UsernamePasswordAuthenticationToken(principal, null, List.of(new SimpleGrantedAuthority("ROLE_USER")));
+        SecurityContextHolder.getContext().setAuthentication(auth);
+    }
 
     @Test
     public void createTemplateReturnsTemplateWithId() {
