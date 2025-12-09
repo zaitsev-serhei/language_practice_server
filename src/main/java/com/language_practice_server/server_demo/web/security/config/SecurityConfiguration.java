@@ -5,6 +5,7 @@ import com.language_practice_server.server_demo.web.security.service.JwtTokenPro
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -55,9 +56,16 @@ public class SecurityConfiguration {
         JwtAuthenticationFilter jwtFilter = new JwtAuthenticationFilter(tokenProvider);
         http.authorizeHttpRequests(
                 (requests) -> requests
-                        .requestMatchers("/tasktemplate/**", "/tasks/**", "/users/**", "/persons/**").authenticated()
+                        .requestMatchers(HttpMethod.GET,
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/webjars/**",
+                                "/favicon.ico").permitAll()
                         .requestMatchers("/api/oauth2/**", "/api/auth/**", "/public/**", "/oauth2/**", "/login/**").permitAll()
                         .requestMatchers("/auth/**", "/vacancies", "/about", "/forStudents", "/forTeachers", "/error").permitAll()
+                        .requestMatchers("/tasktemplate/**", "/tasks/**", "/users/**", "/persons/**").authenticated()
         )
                 .exceptionHandling(handler -> handler.authenticationEntryPoint(new JwtAuthenticationEntryPoint()))
                 .addFilterBefore(jwtFilter, OAuth2LoginAuthenticationFilter.class)
